@@ -2,6 +2,9 @@
 # Example
 /examples
 
+# Mongo Data
+mongo_data
+
 .DS_Store
 # Dist
 /dist/*
