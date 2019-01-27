@@ -4,6 +4,8 @@
 
 # Mongo Data
 mongo_data
+mongo_data_local
+mongo_log
 
 .DS_Store
 # Dist

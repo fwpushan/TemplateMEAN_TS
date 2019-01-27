@@ -6,6 +6,7 @@
   "scripts": {
     "build": "gulp",
     "start": "npm run build && node dist-server/index.js",
+    "docker_start": "npm run build && NODE_ENV=docker node dist-server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pushan Mitra",

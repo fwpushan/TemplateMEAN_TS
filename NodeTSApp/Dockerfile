@@ -19,7 +19,7 @@ COPY ./NodeTSApp .
 
 EXPOSE 8001
 
-ENTRYPOINT [ "npm", "run", "start" ]
+ENTRYPOINT [ "npm", "run", "docker_start" ]
 
 #CMD [ "npm", "run", "start" ]
 #ENTRYPOINT /usr/bin/tail -f /dev/null
