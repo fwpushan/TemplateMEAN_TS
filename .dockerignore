@@ -1,0 +1,15 @@
+node_modules
+npm-debug.log
+
+**/node_modules
+**/npm-debug.log
+**/dist/**
+**/server-dist/**
+
+AngularApp/node_modules
+AngularApp/npm-debug.log
+AngularApp/dist
+
+NodeTSApp/node_modules
+NodeTSApp/npm-debug.log
+NodeTSApp/server-dist

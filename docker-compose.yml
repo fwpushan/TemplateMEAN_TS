@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+ angular_app:
+  build:
+   context: .
+   dockerfile: ./AngularApp/Dockerfile
+  container_name: AngularApp
+  volumes:
+   - /usr/src/AngularApp
+ node_app:
+  build:
+   context: .
+   dockerfile: ./NodeTSApp/Dockerfile
+  ports:
+   - "0.0.0.0:8001:8001"
+  container_name: NodeApp
+  depends_on:
+    - mongo
+    - angular_app
+  volumes_from:
+   - angular_app
+ mongo:
+  image: mongo
+  container_name: AppMongo
+  ports:
+   - "27017:27017"
+networks:
+  back-tier:
+   driver: bridge
