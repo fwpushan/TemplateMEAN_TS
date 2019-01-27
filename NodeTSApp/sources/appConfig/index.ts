@@ -30,20 +30,20 @@ class AppConfig {
     public dbs: string[] = ['templateDB']
     //environments:  = ['local-dev', 'docker-dev', 'prod']
     constructor() {
-        this.port = process.env.PORT || 8001
+        this.port = process.env.PORT || 8002
         this.host = process.env.host || "127.0.0.1"
     }
 
     public getEnv = () => {
-        return process.NODE_ENV;
+        return process.env.NODE_ENV;
     }
 
     public mongoURL = () => {
-        let env = process.NODE_ENV || 'dev-local'
-        let mongoURL = this.mongoEnvironments[env];
-        let dbName = this.mongoDb;
+        let env = process.env.NODE_ENV || 'dev-local'
+        let mongoURL = this.mongoEnvironments()[env];
+        let dbName = this.mongoDb();
         if (mongoURL && dbName) {
-            return mongoURL + "/" + dbName;
+            return mongoURL +  dbName;
         } else {
             throw new Error("AppConfig: MONGO URL Not available");
         }

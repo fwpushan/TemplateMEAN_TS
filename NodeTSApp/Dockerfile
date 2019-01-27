@@ -1,5 +1,5 @@
 FROM node:9
-
+ENV PORT 8001
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -16,8 +16,10 @@ RUN npm install -d -y
 COPY ./NodeTSApp .
 
 #RUN npm run build-client
+RUN rm -rf ./dist-server
+RUN npm run build
 
-EXPOSE 8001
+EXPOSE $PORT
 
 ENTRYPOINT [ "npm", "run", "docker_start" ]
 
