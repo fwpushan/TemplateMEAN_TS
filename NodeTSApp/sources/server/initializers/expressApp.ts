@@ -6,8 +6,12 @@ import * as bodyParser from "body-parser";
 import * as path from 'path';
 import AppConfig from '../../appConfig'
 import MongooseManager from './mongoManager'
+import { User, IUserModel } from '../modules/User/models/user.model'
+import DataModelController from '../core/dataModel.controller'
 
 declare const __dirname: any;
+
+class UserDMC extends DataModelController<IUserModel> {}
 
 class ExpressApp {
     app: any = express();
@@ -40,7 +44,22 @@ class ExpressApp {
             this.logger.info("Server running on port => " + port);
         });
 
-}
+    }
+
+    async test(): Promise<void> {
+        let dc = new UserDMC(User)
+        let user: any = {
+            firstName: "Lao",
+            lastName: "Ballabh",
+            email: "lao.gas@gmail.com",
+            password: "abc123"
+        }
+        await dc.create(user)
+        let fetchedUser =await  dc.find({ email : "lao.gas@gmail.com"})
+        console.log("Fetched user")
+        console.dir(fetchedUser);
+
+    }
 }
 
 export default ExpressApp.getInstance()
