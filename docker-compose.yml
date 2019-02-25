@@ -1,39 +1,84 @@
-version: "2"
+version: "3.5"
 
 services:
- angular_app:
+ app_api:
+  image: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-api-img
+  container_name: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-api
   build:
-   context: .
-   dockerfile: ./AngularApp/Dockerfile
-  container_name: AngularApp
-  volumes:
-   - /usr/src/AngularApp
-  networks:
-  - local-network
- node_app:
-  build:
-   context: .
-   dockerfile: ./NodeTSApp/Dockerfile
+   context: ./app_api
+   dockerfile: Dockerfile
   ports:
-   - "0.0.0.0:8001:8001"
-  container_name: NodeApp
+   - ${API_PORT}:${API_PORT}
+  environment:
+    - PORT=${API_PORT}
   networks:
   - local-network
+  links:
+    - mongo
+    - db
   depends_on:
     - mongo
-    - angular_app
-  volumes_from:
-   - angular_app
+    - db
+  restart: always
+  command: ["npm", "run", "docker_start"]
  mongo:
-  image: mongo
-  container_name: AppMongo
+  image: mongo:latest
+  container_name: ${PROJECT_NAME}-${ENVIRONMENT}-${APP_VERSION}-${GIT_LOCAL_BRANCH}-mongo
   volumes:
    - ./mongo_data:/data/db
-
   networks:
   - local-network
   ports:
-   - "27017:27017"
+   - 27017:27017
+ db:
+    image: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-postgress-img
+    container_name: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-db
+    build:
+      context: ./app_services/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    networks:
+      - local-network
+ nginx:
+    image: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-img
+    container_name: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-nginx
+    build:
+      context: ./app_services/nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - mongo
+      - db
+      - app_api
+      - webapp
+    networks:
+      - local-network
+ webapp:
+    image: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-webapp-img
+    container_name: ${PROJECT_NAME}-${ENVIRONMENT}-${GIT_LOCAL_BRANCH}-webapp
+    build:
+      context: ./app_ui/app
+      dockerfile: "Dockerfile.dev"
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    volumes:
+    - ./app_ui/app:/app
+    - /app/node_modules
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
+      timeout: 5s
+      interval: 10s
+      start_period: 5s
+    networks:
+      - local-network
+
 networks:
  local-network:
   driver: bridge
+volumes:
+ angular:

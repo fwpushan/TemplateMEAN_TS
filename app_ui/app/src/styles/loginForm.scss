@@ -1,0 +1,20 @@
+.LoginForm{
+    margin: auto;
+    border: 1px solid gray;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.LoginFormInput{
+    font-family: inherit;
+    width: 20rem;
+    height: 25px;
+    margin: 16px;
+    text-align: center;
+    font-weight: bold;
+
+}
+

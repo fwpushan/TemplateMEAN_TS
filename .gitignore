@@ -20,9 +20,9 @@ AngularApp/node_modules
 AngularApp/npm-debug.log
 AngularApp/dist
 
-NodeTSApp/node_modules
-NodeTSApp/npm-debug.log
-NodeTSApp/dist-server
+node_api/node_modules
+node_api/npm-debug.log
+node_api/dist-server
 
 
 # NPM Dir

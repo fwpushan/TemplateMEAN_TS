@@ -1,0 +1,36 @@
+.App {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+}
+
+
+@font-face{
+  font-family: 'Proxima Nova';
+  src: url('../../src/assets/fonts/Proxima\ Nova\ Alt\ Regular-webfont.ttf');
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face{
+  font-family: 'Proxima Nova';
+  src: url('../../src/assets/fonts/Proxima\ Nova\ Alt\ Bold-webfont.ttf');
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face{
+  font-family: 'Proxima Nova';
+  src: url('../../src/assets/fonts/Proxima\ Nova\ Semibold-webfont.ttf');
+  font-style: normal;
+  font-weight: semibold;
+}
+@font-face{
+  font-family: 'Proxima Nova';
+  src: url('../../src/assets/fonts/Proxima\ Nova\ Thin-webfont.ttf');
+  font-style: normal;
+  font-weight: thin;
+}
+@font-face{
+  font-family: 'Proxima Nova';
+  src: url('../../src/assets/fonts/Proxima\ Nova\ Alt\ Condensed\ Semibold-webfont.ttf');
+  font-style: condensed;
+  font-weight: normal;
+}
